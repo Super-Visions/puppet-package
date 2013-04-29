@@ -24,11 +24,13 @@
 #
 # Copyright 2012 Super-Visions, unless otherwise noted.
 #
-class package
+class package ( 
+  $packages = hiera_hash('packages', {} ) 
+)
 {
-  anchor { 'package::start': }->
-  class { 'package::package': }->
-  class { 'package::config': }~>
-  class { 'package::service': }->
-  anchor { 'package::end': }
+  validate_hash( $packages )
+  if( $packages )
+  {
+    create_resources( package, $packages )
+  }
 }
