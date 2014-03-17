@@ -28,6 +28,7 @@ class package (
   $packages = hiera_hash('packages', {} ) 
 )
 {
+  notify { ":${packages}:": }
   validate_hash( $packages )
   if( $packages )
   {
